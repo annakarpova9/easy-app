@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${firaCode.variable} ${playfair.variable} ${rubik.variable} antialiased flex min-h-screen bg-zinc-50 dark:bg-black font-sans`}
+        className={`${inter.variable} ${firaCode.variable} ${playfair.variable} ${rubik.variable} antialiased flex min-h-screen font-sans`}
       >
         <ThemeProvider
           attribute="class"

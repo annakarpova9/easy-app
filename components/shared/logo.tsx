@@ -33,7 +33,7 @@ export const Logo = ({ className, isLink = true, size = "lg" }: LogoProps) => {
   if (isLink) {
     return (
       <Link
-        href="/public"
+        href="/"
         className={`${baseClasses} text-3xl hover:text-yellow-400 hover:transition-colors duration-500`}
       >
         {content}

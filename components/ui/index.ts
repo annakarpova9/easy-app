@@ -4,3 +4,4 @@ export { Checkbox } from "./checkbox";
 export { Label } from "./label";
 export { Tabs } from "./tabs";
 export { Select } from "./select";
+export { Spinner } from "./spinner";

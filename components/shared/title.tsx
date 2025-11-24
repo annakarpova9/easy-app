@@ -1,7 +1,7 @@
 import { createElement, FC } from "react";
 import { cn } from "@/lib/utils";
 
-type TitleSize = "2xs" | "xs" | "sm" | "md" | "lg" | "xl";
+type TitleSize = "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 
 interface TitleProps {
   size?: TitleSize;
@@ -17,6 +17,7 @@ export const Title: FC<TitleProps> = ({ size = "sm", className, text }) => {
     md: "h3",
     lg: "h2",
     xl: "h1",
+    "2xl": "h1",
   } as const;
 
   const mapClassNameBySize = {
@@ -26,6 +27,7 @@ export const Title: FC<TitleProps> = ({ size = "sm", className, text }) => {
     md: "text-[clamp(22px,2.6vw,26px)]",
     lg: "text-[clamp(26px,3vw,32px)]",
     xl: "text-[clamp(30px,3.5vw,36px)]",
+    "2xl": "text-[clamp(36px,5vw,50px)]",
   };
 
   return createElement(

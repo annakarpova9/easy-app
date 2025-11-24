@@ -1,8 +1,16 @@
+import { FC } from "react";
 import { Logo } from "./logo";
+import { cn } from "@/lib/utils";
 
-export const Footer = () => {
+interface FooterProps {
+  className?: string;
+}
+
+export const Footer: FC<FooterProps> = ({ className }) => {
   return (
-    <footer className="flex w-full items-center justify-center py-6">
+    <footer
+      className={cn("flex w-full items-center justify-center py-6", className)}
+    >
       <Logo isLink={false} size="sm" />
     </footer>
   );
