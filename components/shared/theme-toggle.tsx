@@ -3,9 +3,13 @@
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
-export const ThemeToggle = () => {
+interface ThemeToggleProps {
+  className?: string;
+}
+
+export const ThemeToggle: FC<ThemeToggleProps> = ({ className }) => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -27,7 +31,12 @@ export const ThemeToggle = () => {
   }
 
   return (
-    <Button variant="outline" size="icon" onClick={toggleTheme}>
+    <Button
+      variant="secondary"
+      size="icon"
+      onClick={toggleTheme}
+      className={className}
+    >
       {theme === "light" ? <Sun /> : <Moon />}
     </Button>
   );

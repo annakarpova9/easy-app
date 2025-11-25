@@ -34,7 +34,7 @@ export const Logo = ({ className, isLink = true, size = "lg" }: LogoProps) => {
     return (
       <Link
         href="/"
-        className={`${baseClasses} text-3xl hover:text-yellow-400 hover:transition-colors duration-500`}
+        className={`${baseClasses} text-3xl hover:text-orange-500 hover:transition-colors duration-500`}
       >
         {content}
       </Link>

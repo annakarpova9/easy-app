@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { firaCode, inter, playfair, rubik } from "@/app/ui/fonts";
+import { firaCode, inter, rubik } from "@/app/ui/fonts";
 import { ThemeProvider } from "@/components/shared/theme-provider";
+import { Toaster } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: {
@@ -19,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${firaCode.variable} ${playfair.variable} ${rubik.variable} antialiased flex min-h-screen font-sans`}
+        className={`${inter.variable} ${firaCode.variable} ${rubik.variable} antialiased flex min-h-screen font-sans`}
       >
         <ThemeProvider
           attribute="class"
@@ -28,6 +29,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

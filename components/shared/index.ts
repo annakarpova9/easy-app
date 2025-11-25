@@ -8,3 +8,6 @@ export { TodoList } from "./todo-list";
 export { TodoItem } from "./todo-item";
 export { Todo } from "./todo";
 export { Filters } from "./filters";
+export { LoginForm } from "./login-form";
+export { SignupForm } from "./signup-form";
+export { AuthForm, type FormFieldConfig } from "./auth-form";
