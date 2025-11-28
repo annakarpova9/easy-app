@@ -1,59 +1,6 @@
-// import { createServerClient } from "@supabase/ssr";
-// import { NextResponse, type NextRequest } from "next/server";
-//
-// export async function updateSession(request: NextRequest) {
-//   let response = NextResponse.next({
-//     request: {
-//       headers: request.headers,
-//     },
-//   });
-//
-//   const supabase = createServerClient(
-//     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-//     {
-//       cookies: {
-//         getAll() {
-//           return request.cookies.getAll();
-//         },
-//         setAll(cookiesToSet) {
-//           // cookiesToSet.forEach(({ name, value }) =>
-//           //   request.cookies.set(name, value),
-//           // );
-//           // response = NextResponse.next({
-//           //   request,
-//           // });
-//           cookiesToSet.forEach(({ name, value, options }) =>
-//             response.cookies.set(name, value, options),
-//           );
-//         },
-//       },
-//     },
-//   );
-//
-//   const { data } = await supabase.auth.getClaims();
-//   const user = data?.claims;
-//
-//   if (!user && request.nextUrl.pathname.startsWith("/todos")) {
-//     const url = request.nextUrl.clone();
-//     url.pathname = "/login";
-//     return NextResponse.redirect(url);
-//   }
-//
-//   if (
-//     user &&
-//     (request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/")
-//   ) {
-//     const url = request.nextUrl.clone();
-//     url.pathname = "/todos";
-//     return NextResponse.redirect(url);
-//   }
-//
-//   return response;
-// }
-
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { AppRoutes } from "@/lib/config/routes";
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -87,15 +34,27 @@ export async function updateSession(request: NextRequest) {
 
   const user = data?.claims;
 
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/signup") &&
-    !request.nextUrl.pathname.startsWith("/auth/confirm") &&
-    !request.nextUrl.pathname.startsWith("/")
-  ) {
+  const pathname = request.nextUrl.pathname;
+
+  const publicPaths = [
+    AppRoutes.LOGIN,
+    AppRoutes.SIGNUP,
+    AppRoutes.AUTH_CALLBACK,
+    AppRoutes.AUTH_RESET_PASSWORD,
+    AppRoutes.AUTH_RESET_PASSWORD_CALLBACK,
+    AppRoutes.RESET_PASSWORD_REQUEST,
+  ];
+  const isRootPath = pathname === AppRoutes.HOME;
+
+  const startsWithPublicFolder = publicPaths.some((path) =>
+    request.nextUrl.pathname.startsWith(path),
+  );
+
+  const isPublicPath = isRootPath || startsWithPublicFolder;
+
+  if (!user && !isPublicPath) {
     const url = request.nextUrl.clone();
-    url.pathname = "/login";
+    url.pathname = AppRoutes.LOGIN;
     return NextResponse.redirect(url);
   }
 

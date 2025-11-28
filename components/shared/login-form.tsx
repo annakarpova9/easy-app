@@ -5,6 +5,8 @@ import { FC } from "react";
 import { login } from "@/lib/actions/auth";
 import { AuthForm, FormFieldConfig } from "@/components/shared/auth-form";
 import { toast } from "sonner";
+import { AppRoutes } from "@/lib/config/routes";
+import { UserMessages } from "@/lib/config/messages";
 
 interface LoginFormProps {
   className?: string;
@@ -39,7 +41,20 @@ export const LoginForm: FC<LoginFormProps> = ({ className }) => {
     const result = await login(formData);
 
     if (result && "error" in result) {
-      toast.error(result.error, { position: "top-right" });
+      const errorMessage = result.error;
+      let userFriendlyMessage = "";
+
+      if (errorMessage?.includes("Invalid login credentials")) {
+        userFriendlyMessage = UserMessages.ERROR.INVALID_CREDENTIALS;
+      } else if (errorMessage?.includes("Email not confirmed")) {
+        userFriendlyMessage = UserMessages.ERROR.EMAIL_NOT_CONFIRMED;
+      } else if (errorMessage?.includes("blocked")) {
+        userFriendlyMessage = UserMessages.ERROR.AUTH_BLOCKED;
+      } else {
+        userFriendlyMessage = UserMessages.ERROR.UNEXPECTED;
+      }
+
+      toast.error(userFriendlyMessage, { position: "top-right" });
     }
   }
   return (
@@ -52,7 +67,8 @@ export const LoginForm: FC<LoginFormProps> = ({ className }) => {
       fields={loginFields}
       footerText="Нет аккаунта?"
       footerLinkText="Зарегистрироваться"
-      footerLinkHref="/signup"
+      footerLinkHref={AppRoutes.SIGNUP}
+      showForgotPassword
       className={className}
     />
   );

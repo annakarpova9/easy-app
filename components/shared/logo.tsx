@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PawPrint } from "lucide-react";
+import { AppRoutes } from "@/lib/config/routes";
 
 interface LogoProps {
   className?: string;
@@ -33,7 +34,7 @@ export const Logo = ({ className, isLink = true, size = "lg" }: LogoProps) => {
   if (isLink) {
     return (
       <Link
-        href="/"
+        href={AppRoutes.HOME}
         className={`${baseClasses} text-3xl hover:text-orange-500 hover:transition-colors duration-500`}
       >
         {content}

@@ -12,3 +12,6 @@ export { LoginForm } from "./login-form";
 export { SignupForm } from "./signup-form";
 export { AuthForm, type FormFieldConfig } from "./auth-form";
 export { AuthMessages } from "./auth-messages";
+export { LogoutButton } from "./logout-button";
+export { RequestResetPasswordForm } from "./request-reset-password-form";
+export { ResetPasswordForm } from "./reset-password-form";

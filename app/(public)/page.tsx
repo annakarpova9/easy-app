@@ -1,6 +1,7 @@
 import { Title } from "@/components/shared";
 import { Button } from "@/components/ui";
 import Link from "next/link";
+import { AppRoutes } from "@/lib/config/routes";
 
 export default function Page() {
   return (
@@ -8,7 +9,7 @@ export default function Page() {
       <div className="max-w-3xl h-full my-0 mx-auto px-6 flex flex-col items-center justify-center gap-6">
         <Title text="Твои собачьи дела" size="hero" className="font-bold" />
         <Button asChild size="lg" className="text-xl w-full">
-          <Link href="/login">Войти</Link>
+          <Link href={AppRoutes.LOGIN}>Войти</Link>
         </Button>
       </div>
     </section>

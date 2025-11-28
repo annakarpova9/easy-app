@@ -25,8 +25,8 @@ import {
   Spinner,
 } from "@/components/ui";
 import Link from "next/link";
-import { toast } from "sonner";
 import { PawPrint } from "lucide-react";
+import { AppRoutes } from "@/lib/config/routes";
 
 export type FormFieldConfig<T extends FieldValues> = {
   name: Path<T>;
@@ -44,9 +44,10 @@ interface AuthFormProps<T extends FieldValues> {
   formId: string;
   onSubmit: SubmitHandler<T>;
   fields: FormFieldConfig<T>[];
-  footerText: string;
-  footerLinkText: string;
-  footerLinkHref: string;
+  showFooter?: boolean;
+  footerText?: string;
+  footerLinkText?: string;
+  footerLinkHref?: string;
   showForgotPassword?: boolean;
 }
 
@@ -58,9 +59,10 @@ export const AuthForm = <T extends FieldValues>({
   formId,
   onSubmit,
   fields,
-  footerText,
-  footerLinkText,
-  footerLinkHref,
+  showFooter = true,
+  footerText = "",
+  footerLinkText = "",
+  footerLinkHref = "",
   showForgotPassword = false,
 }: AuthFormProps<T>) => {
   const form = useForm<T>({
@@ -72,6 +74,15 @@ export const AuthForm = <T extends FieldValues>({
     control,
     formState: { isSubmitting },
   } = form;
+
+  const forgotPasswordLink = showForgotPassword ? (
+    <Link
+      href={AppRoutes.RESET_PASSWORD_REQUEST}
+      className="text-orange-500 hover:underline"
+    >
+      Забыли пароль?
+    </Link>
+  ) : null;
 
   return (
     <div
@@ -119,6 +130,7 @@ export const AuthForm = <T extends FieldValues>({
             </FieldGroup>
           </form>
         </CardContent>
+
         <CardFooter className="flex flex-col gap-4 text-xs text-center">
           <Field>
             <Button
@@ -130,23 +142,20 @@ export const AuthForm = <T extends FieldValues>({
             >
               {isSubmitting ? <Spinner /> : <PawPrint />}
             </Button>
-            {showForgotPassword && (
-              <Link
-                href={""}
-                onClick={() => toast("Не забывайте", { position: "top-right" })}
-              >
-                Забыли пароль?
-              </Link>
+            {showFooter && (
+              <>
+                {forgotPasswordLink}
+                <p className="text-sm text-center">
+                  {footerText}{" "}
+                  <Link
+                    href={footerLinkHref}
+                    className="text-orange-500 hover:underline"
+                  >
+                    {footerLinkText}
+                  </Link>
+                </p>
+              </>
             )}
-            <p className="text-sm text-center">
-              {footerText}{" "}
-              <Link
-                href={footerLinkHref}
-                className="text-orange-500 hover:underline"
-              >
-                {footerLinkText}
-              </Link>
-            </p>
           </Field>
         </CardFooter>
       </Card>

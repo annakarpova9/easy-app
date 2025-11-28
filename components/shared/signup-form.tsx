@@ -5,6 +5,7 @@ import { FC } from "react";
 import { AuthForm, FormFieldConfig } from "@/components/shared/auth-form";
 import { signup } from "@/lib/actions/auth";
 import { toast } from "sonner";
+import { AppRoutes } from "@/lib/config/routes";
 
 interface SignupFormProps {
   className?: string;
@@ -70,7 +71,7 @@ export const SignupForm: FC<SignupFormProps> = ({ className }) => {
       fields={signupFields}
       footerText="Уже есть аккаунт?"
       footerLinkText="Войти"
-      footerLinkHref="/login"
+      footerLinkHref={AppRoutes.LOGIN}
       className={className}
     />
   );
