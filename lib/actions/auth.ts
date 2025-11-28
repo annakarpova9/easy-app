@@ -3,9 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
-import { headers } from "next/headers";
+// import { headers } from "next/headers";
 import { AppRoutes } from "@/lib/config/routes";
 import { UserMessages } from "@/lib/config/messages";
+import { getBaseUrl } from "@/lib/utils/get-base-url";
 
 type ActionResponse = { error?: string } | void;
 
@@ -34,7 +35,9 @@ export async function signup(formData: FormData): Promise<ActionResponse> {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  const origin = (await headers()).get("origin");
+  const origin = getBaseUrl();
+
+  // const origin = (await headers()).get("origin");
 
   if (!origin) {
     return { error: UserMessages.SYSTEM.URL_ORIGIN_MISSING };
@@ -81,7 +84,8 @@ export async function requestPasswordReset(
 ): Promise<ActionResponse> {
   const supabase = await createClient();
   const email = formData.get("email") as string;
-  const origin = (await headers()).get("origin");
+  const origin = getBaseUrl();
+  // const origin = (await headers()).get("origin");
   const redirectToUrl = `${origin}${AppRoutes.AUTH_RESET_PASSWORD_CALLBACK}`;
 
   if (!origin) {
