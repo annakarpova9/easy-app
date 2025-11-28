@@ -1,7 +1,17 @@
 "use client";
 
-import { LoginForm } from "@/components/shared";
+import { AuthMessages, LoginForm } from "@/components/shared";
+import { Suspense } from "react";
 
 export default function Page() {
-  return <LoginForm />;
+  // useUrlToastMessages();
+
+  return (
+    <>
+      <Suspense fallback={null}>
+        <AuthMessages />
+      </Suspense>
+      <LoginForm />
+    </>
+  );
 }

@@ -15,7 +15,9 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    redirect("/login?error=Could not authenticate");
+    return { error: error.message };
+    // return redirect(`/login?error=${encodeURIComponent(error.message)}`);
+    // redirect("/login?error=Could not authenticate");
   }
 
   revalidatePath("/", "layout");
@@ -25,17 +27,32 @@ export async function login(formData: FormData) {
 export async function signup(formData: FormData) {
   const supabase = await createClient();
 
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
+  const username = formData.get("username") as string;
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
 
-  const { error } = await supabase.auth.signUp(data);
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        username: username,
+      },
+    },
+  });
 
   if (error) {
-    redirect("/signup?error=Could not register");
+    return { error: error.message };
+    // return redirect(`/signup?error=${encodeURIComponent(error.message)}`);
+    // redirect("/signup?error=Could not register");
   }
 
-  revalidatePath("/", "layout");
-  redirect("/todos");
+  // redirect("/login?message=Проверьте свою почту для подтверждения регистрации");
+  redirect(
+    "/login?message=" +
+      encodeURIComponent("Проверьте свою почту для подтверждения регистрации"),
+  );
+
+  // revalidatePath("/", "layout");
+  // redirect("/todos");
 }

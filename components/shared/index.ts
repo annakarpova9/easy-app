@@ -11,3 +11,4 @@ export { Filters } from "./filters";
 export { LoginForm } from "./login-form";
 export { SignupForm } from "./signup-form";
 export { AuthForm, type FormFieldConfig } from "./auth-form";
+export { AuthMessages } from "./auth-messages";

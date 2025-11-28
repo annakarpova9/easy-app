@@ -1,7 +1,13 @@
-"use client";
-
-import { SignupForm } from "@/components/shared";
+import { AuthMessages, SignupForm } from "@/components/shared";
+import { Suspense } from "react";
 
 export default function Page() {
-  return <SignupForm />;
+  return (
+    <>
+      <Suspense fallback={null}>
+        <AuthMessages />
+      </Suspense>
+      <SignupForm />
+    </>
+  );
 }

@@ -142,6 +142,7 @@ import { LoginFormValues, loginSchema } from "@/lib/schemas/auth";
 import { FC } from "react";
 import { login } from "@/lib/actions/auth";
 import { AuthForm, FormFieldConfig } from "@/components/shared/auth-form";
+import { toast } from "sonner";
 
 interface LoginFormProps {
   className?: string;
@@ -173,7 +174,11 @@ export const LoginForm: FC<LoginFormProps> = ({ className }) => {
     formData.append("email", values.email);
     formData.append("password", values.password);
 
-    await login(formData);
+    const result = await login(formData);
+
+    if (result && "error" in result) {
+      toast.error(result.error, { position: "top-right" });
+    }
   }
   return (
     <AuthForm

@@ -184,6 +184,7 @@ import { SignupFormValues, signupSchema } from "@/lib/schemas/auth";
 import { FC } from "react";
 import { AuthForm, FormFieldConfig } from "@/components/shared/auth-form";
 import { signup } from "@/lib/actions/auth";
+import { toast } from "sonner";
 
 interface SignupFormProps {
   className?: string;
@@ -232,7 +233,11 @@ export const SignupForm: FC<SignupFormProps> = ({ className }) => {
     formData.append("email", values.email);
     formData.append("password", values.password);
 
-    await signup(formData);
+    const result = await signup(formData);
+
+    if (result && "error" in result) {
+      toast.error(result.error, { position: "top-right" });
+    }
   }
 
   return (
